@@ -2,5 +2,3 @@
 *UNFINISHED :D*
 
 npm i
-
-# web3-app-marketplace
