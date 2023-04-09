@@ -2,13 +2,12 @@ import { ethers } from 'ethers';
 import { useSigner } from 'wagmi';
 import { useForm } from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
-
 import * as yup  from "yup";
 import React, { useState, useEffect } from 'react';
 import marketplaceABI from '../abi/Marketplace.json';
 import deployABI from '../abi/Deployment.json';
 import Button from '../components/ui/Button';
-import styles from "../style/plamen.module.scss"
+import styles from "../style/some.module.scss"
 
 export default function Collection() {
     const { data: signer } = useSigner();
@@ -21,13 +20,13 @@ export default function Collection() {
     useEffect(() => {
         if (signer) {
             const _contractMarketplace = new ethers.Contract(
-            '0xed5E4ce403ffA04db1b6Cb1EAa01F33EE28C499b',
+            '0xba26F9957cF575EA6a3f6eBf4bdBe16578ac804B',
             marketplaceABI,
-            signer
+          signer
             );
 
             const _contractDeploy = new ethers.Contract(
-            '0xEb732590445D242df43d3a1f679D5120f5F02F81',
+            '0x99035705b03BB153B32A6C7dD1e634356aa5a16f',
             deployABI,
             signer
             );
@@ -39,10 +38,10 @@ export default function Collection() {
 
     const schema = yup.object().shape({
         Collection: yup.string().min(1).max(15).required("Collection name required"),
-        Description: yup.string().min(1).max(6).required("Collection description required"),
+        Symbol: yup.string().min(1).max(6).required("Collection symbol required"),
     });
 
-    const {register, handleSubmit, formState} = useForm({
+    const {register, handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
 
@@ -52,7 +51,7 @@ export default function Collection() {
 
         try {
             // Deploying nft contract and getting it's address
-            const tx1 = await contractDeploy.createToken(data.Collection, data.Description);
+            const tx1 = await contractDeploy.createToken(data.Collection, data.Symbol);
             await tx1.wait();
             const address = await contractDeploy.lastDeployedContract();
 
@@ -61,7 +60,7 @@ export default function Collection() {
             await tx2.wait();
         } 
         catch (e) {
-            setErr("e: " + e + "e.reason: "+ e.reason);
+            setErr("e: " + e);
         } 
         finally {
             setIsLoading(false);
@@ -70,12 +69,12 @@ export default function Collection() {
 
     return (
         <div>
-            <form className={styles.wrapperPlamen} onSubmit={handleSubmit((data) => handleCreateCollection(data))}>
-                <input type="text" placeholder="Collection name" {...register("Collection")}/>
-                <input type="text" placeholder="Description" {...register("Description")}/>
-                <Button className={styles.btnPlamen} loading={isLoading} type="submit" placeholder="Create collection"> Create collection </Button> 
-            </form>
-            {err && <div> {err} </div>}
+                <form className={styles.form_wrapper} onSubmit={handleSubmit((data) => handleCreateCollection(data))}>
+                    <input type="text" placeholder="Collection name" {...register("Collection")}/>
+                    <input type="text" placeholder="Symbol" {...register("Symbol")}/>
+                    <Button className={styles.btn_wrapper} loading={isLoading} type="submit" placeholder="Create collection"> Create collection </Button> 
+                </form>
+                {err && <div> {err} </div>}
         </div>
     )
 }

@@ -1,18 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
 import { WagmiConfig, configureChains, createClient } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
-
 import Mint from "../pages/Mint";
 import Collection from "../pages/Collection";
 import Profile from "../pages/Profile";
 import Home from "../pages/Home";
-import NftPage from "../pages/NftPage"
-
+import Nft from "../pages/Nft"
 import Header from './layout/Header';
 import Footer from './layout/Footer';
+import CollectSort from '../pages/CollectSort';
 
 function App() {
   const { provider } = configureChains([sepolia], [publicProvider()]);
@@ -30,10 +28,11 @@ function App() {
           <div className="main">
             <Routes>
               <Route path='/'           element={<Home />}        />
-              <Route path='/NftPage'    element={<NftPage />}     />
+              <Route path='/Nft'    element={<Nft />}     />
               <Route path='/mint'       element={<Mint />}        />
               <Route path='/collection' element={<Collection />}  />
-              <Route path='/profile'    element={<Profile />}     /> 
+              <Route path='/profile'    element={<Profile />}     />
+              <Route path='/collection-sort' element={<CollectSort />} /> 
             </Routes>
           </div>
           <Footer />

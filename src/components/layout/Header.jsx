@@ -1,10 +1,9 @@
-import React from 'react';
-import { useConnect, useAccount, useBalance } from 'wagmi';
+import React, { useState } from 'react';
+import { useConnect, useAccount, useBalance, useSigner } from 'wagmi';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { sepolia } from 'wagmi/chains';
-
+import { Link } from "react-router-dom"
 import { truncate } from '../../utils';
-
 import Button from '../ui/Button';
 
 const md5 = require('md5');
@@ -22,7 +21,7 @@ function Header() {
   const { data } = useBalance({
     address,
   });
-
+  
   const handleConnectButtonClick = async () => {
     await connect();
   };
@@ -36,6 +35,19 @@ function Header() {
               src="https://limeacademy.tech/wp-content/uploads/2021/08/limeacademy_logo.svg"
               alt=""
             />
+          </a>
+          <form>
+            <Link to="/collection"> Collection </Link>
+            <Link to="/mint"> Mint </Link>
+            <Link to="/profile" state={{
+              owner: address,
+            }}> Profile </Link>
+          </form>
+          <a href="/">
+            
+          </a>
+          <a href="/">
+            
           </a>
           <div className="d-flex">
             {isLoading ? (
