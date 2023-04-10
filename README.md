@@ -1,4 +1,8 @@
 # 😎 Web3 marketplace application
-*UNFINISHED :D*
 
-npm i
+
+To run the project just:
+npm install
+npm start
+
+-You need to connect to a wallet in order to see the contents of the home page
