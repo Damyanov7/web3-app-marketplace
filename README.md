@@ -8,3 +8,5 @@ To run the project just:
 -npm start
 
 -You need to connect to a wallet in order to see the contents of the home page
+
+
